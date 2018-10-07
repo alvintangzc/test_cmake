@@ -6,13 +6,11 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_BUILD_TYPE DEBUG)
 
-aux_source_directory(. DIR_SRCS)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
-add_subdirectory (cmake/Modules)
-
 find_package(RapidJSON)
+find_package(CPR)
 find_package(Boost REQUIRED)
 
 # check if boost was found
@@ -23,9 +21,12 @@ else()
 endif()
 
 include_directories(${RapidJSON_INCLUDE_DIRS})
+include_directories(${CPR_INCLUDE_DIRS})
 
+aux_source_directory(. DIR_SRCS)
 add_executable(test_cmake ${DIR_SRCS})
-#target_link_libraries(test_cmake
-#    PRIVATE
-#    ${Boost_LIBRARIES})
-#
+target_link_libraries(test_cmake
+    PRIVATE
+    ${CPR_LIBRARIES}
+    ${Boost_LIBRARIES})
+
