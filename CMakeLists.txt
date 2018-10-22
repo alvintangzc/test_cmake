@@ -21,14 +21,16 @@ else()
 endif()
 
 
-add_subdirectory(thirdparty/spdlog)
-target_link_libraries(test_cmake PRIVATE spdlog::spdlog)
+add_subdirectory(thirdparty/cpr)
+target_link_libraries(test_cmake PRIVATE ${CPR_LIBRARIES})
 
 target_link_libraries(test_cmake PRIVATE ${Boost_LIBRARIES})
 
 target_include_directories(test_cmake PRIVATE
   thirdparty
   thirdparty/spdlog
+  thirdparty/rapidjson/include
+  ${CPR_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
 

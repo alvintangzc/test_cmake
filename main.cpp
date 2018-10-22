@@ -8,7 +8,12 @@
 #include "boost/lexical_cast.hpp"
 #include "boost/algorithm/string.hpp"
 
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
 using namespace std;
+using namespace rapidjson;
 auto console = spdlog::stdout_color_mt("console");
 
 int main() {
@@ -25,5 +30,15 @@ int main() {
     {
         console->info("{}", item);
     }
-   return 0;
+
+    const char* json = "{\"project\":\"rapidjson\",\"stars\":10}";
+    Document d;
+    d.Parse(json);
+    StringBuffer buffer;
+    Writer<StringBuffer> writer(buffer);
+    d.Accept(writer);
+
+    console->info("{}", buffer.GetString());
+
+    return 0;
 }
