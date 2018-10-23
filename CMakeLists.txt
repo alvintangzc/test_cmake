@@ -6,8 +6,10 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_BUILD_TYPE DEBUG)
 
+aux_source_directory(. DIR_SRCS)
+add_executable(test_cmake ${DIR_SRCS})
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 find_package(Boost REQUIRED)
 
@@ -18,11 +20,17 @@ else()
     message (FATAL_ERROR "Cannot find Boost")
 endif()
 
-include_directories(${Boost_INCLUDE_DIRS})
 
-aux_source_directory(. DIR_SRCS)
-add_executable(test_cmake ${DIR_SRCS})
-target_link_libraries(test_cmake
-    PRIVATE
-    ${Boost_LIBRARIES})
+add_subdirectory(thirdparty/cpr)
+target_link_libraries(test_cmake PRIVATE ${CPR_LIBRARIES})
+
+target_link_libraries(test_cmake PRIVATE ${Boost_LIBRARIES})
+
+target_include_directories(test_cmake PRIVATE
+  thirdparty
+  thirdparty/spdlog
+  thirdparty/rapidjson/include
+  ${CPR_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+)
 
