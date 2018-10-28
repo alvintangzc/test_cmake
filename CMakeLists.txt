@@ -11,6 +11,8 @@ add_executable(test_cmake ${DIR_SRCS})
 
 #list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
+add_subdirectory(thirdparty/cpr)
+
 find_package(Boost REQUIRED)
 
 # check if boost was found
@@ -20,15 +22,11 @@ else()
     message (FATAL_ERROR "Cannot find Boost")
 endif()
 
-
-add_subdirectory(thirdparty/cpr)
-target_link_libraries(test_cmake PRIVATE ${CPR_LIBRARIES})
-
-target_link_libraries(test_cmake PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(test_cmake PRIVATE ${CPR_LIBRARIES} ${Boost_LIBRARIES})
 
 target_include_directories(test_cmake PRIVATE
   thirdparty
-  thirdparty/spdlog
+  thirdparty/spdlog/include
   thirdparty/rapidjson/include
   ${CPR_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}

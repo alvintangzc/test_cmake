@@ -14,6 +14,7 @@
 
 using namespace std;
 using namespace rapidjson;
+
 auto console = spdlog::stdout_color_mt("console");
 
 void safeclose(FILE*fp) {
@@ -28,7 +29,7 @@ void test_file() {
 }
 
 int main() {
-   console->info("Hello, world");
+    console->info("Hello, world");
     console->info("{}", (boost::format("%s %s") % "Hello" % 3).str());
     console->info("{}", boost::lexical_cast<string>(123));
     console->info("{}", boost::lexical_cast<int>("123"));
