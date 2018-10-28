@@ -1,9 +1,6 @@
-[submodule "cmake/Modules/cpr"]
+[submodule "thirdparty/spdlog"]
 	path = thirdparty/spdlog
 	url = https://github.com/gabime/spdlog.git
 [submodule "thirdparty/rapidjson"]
 	path = thirdparty/rapidjson
 	url = https://github.com/Tencent/rapidjson.git
-[submodule "cpr"]
-	path = thirdparty/cpr
-	url = https://github.com/whoshuu/cpr.git
