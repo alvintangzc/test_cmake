@@ -12,6 +12,8 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
+#include <cpr/cpr.h>
+
 using namespace std;
 using namespace rapidjson;
 
@@ -26,6 +28,13 @@ void safeclose(FILE*fp) {
 void test_file() {
     std::shared_ptr<FILE> fp( fopen("test.file", "a+t"), safeclose );
     fprintf( fp.get(), "a message\n" );
+}
+
+void test_http() {
+    auto r = cpr::Get(cpr::Url{"https://www.qq.com/"});
+    console->info("{}", r.status_code);
+    console->info("{}", r.header["content-type"]);      // application/json; charset=utf-8
+    console->info("{}", r.text);                         // JSON text string
 }
 
 int main() {
@@ -65,6 +74,8 @@ int main() {
     d.Accept(writer);
 
     console->info("{}", buffer.GetString());
+
+    test_http();
 
     return 0;
 }
